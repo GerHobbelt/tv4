@@ -1123,11 +1123,14 @@ ValidatorContext.prototype.validateAnyOf = function validateAnyOf(data, schema, 
 		this.unknownPropertyPaths = oldUnknownPropertyPaths;
 		this.knownPropertyPaths = oldKnownPropertyPaths;
 	}
-	if (errorAtEnd) {
-		errors = errors.concat(this.errors.slice(startErrorCount));
-		this.errors = this.errors.slice(0, startErrorCount);
-		return this.createError(ErrorCodes.ANY_OF_MISSING, {}, "", "/anyOf", errors);
-	}
+    if (errorAtEnd) {
+        errors = errors.concat(this.errors.slice(startErrorCount));
+        this.errors = this.errors.slice(0, startErrorCount);
+        return this.createError(ErrorCodes.ANY_OF_MISSING, {}, "", "/anyOf", errors);
+    } else {
+        this.errors = this.errors.slice(0, startErrorCount);
+    }
+
 };
 
 ValidatorContext.prototype.validateOneOf = function validateOneOf(data, schema, dataPointerPath) {
