@@ -849,6 +849,9 @@ ValidatorContext.prototype.validateArray = function validateArray(data, schema, 
 
 ValidatorContext.prototype.validateArrayLength = function validateArrayLength(data, schema) {
 	var error;
+	if (schema.minItems === undefined) {
+		schema.minItems = 1;
+	}
 	if (schema.minItems !== undefined) {
 		if (data.length < schema.minItems) {
 			error = (this.createError(ErrorCodes.ARRAY_LENGTH_SHORT, {length: data.length, minimum: schema.minItems})).prefixWith(null, "minItems");
@@ -932,6 +935,9 @@ ValidatorContext.prototype.validateObject = function validateObject(data, schema
 ValidatorContext.prototype.validateObjectMinMaxProperties = function validateObjectMinMaxProperties(data, schema) {
 	var keys = Object.keys(data);
 	var error;
+	if(schema.minProperties === undefined) {
+		schema.minProperties = 1;
+	}
 	if (schema.minProperties !== undefined) {
 		if (keys.length < schema.minProperties) {
 			error = this.createError(ErrorCodes.OBJECT_PROPERTIES_MINIMUM, {propertyCount: keys.length, minimum: schema.minProperties}).prefixWith(null, "minProperties");
